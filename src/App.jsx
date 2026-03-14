@@ -44,11 +44,12 @@ export default function Invitation() {
 
   const goldDots = useMemo(
     () =>
-      Array.from({ length: 22 }).map(() => ({
+      Array.from({ length: 60 }).map(() => ({
         left: Math.random() * 100,
         top: Math.random() * 100,
-        size: 6 + Math.random() * 6,
-        duration: 3 + Math.random() * 3,
+        size: 6 + Math.random() * 10,
+        duration: 6 + Math.random() * 4,
+        drift: 4 + Math.random() * 6,
       })),
     [],
   );
@@ -79,7 +80,7 @@ export default function Invitation() {
   ];
 
   const whatsapp =
-    "https://wa.me/5218334385938?text=Confirmo%20mi%20asistencia";
+    "https://wa.me/5218334385938?text=Hola!%20Confirmo%20mi%20asistencia%20al%20Bautizo%20y%20Primer%20A%C3%B1ito%20de%20Karol%20el%2011%20de%20abril.%20%F0%9F%8E%89";
 
   const GoldDots = () => (
     <>
@@ -93,12 +94,14 @@ export default function Invitation() {
             width: `${dot.size}px`,
             height: `${dot.size}px`,
             background: "#FFD700",
-            boxShadow: "0 0 12px #FFD700, 0 0 24px rgba(255,215,0,0.8)",
+            filter: "blur(0.4px)",
+            boxShadow:
+              "0 0 6px rgba(255,215,0,0.8), 0 0 12px rgba(255,215,0,0.5)",
           }}
           animate={{
-            y: [-10, 10, -10],
-            opacity: [0.6, 1, 0.6],
-            scale: [1, 1.4, 1],
+            y: [-dot.drift, dot.drift, -dot.drift],
+            opacity: [0.5, 0.9, 0.5],
+            scale: [1, 1.1, 1],
           }}
           transition={{
             duration: dot.duration,
@@ -155,6 +158,15 @@ export default function Invitation() {
         >
           Karol
         </motion.h2>
+
+        <motion.p
+          className="mt-2 text-lg font-semibold tracking-widest text-secondary/80 uppercase"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          11 · Abril · 2026
+        </motion.p>
 
         <p className="mt-6 text-base-content/70 max-w-sm">
           ¡Acompáñanos a celebrar este día tan especial!
@@ -215,9 +227,9 @@ export default function Invitation() {
               className="absolute inset-0 w-full h-full object-cover"
             />
 
-            <div className="absolute inset-0 bg-white/30"></div>
+            <div className="absolute inset-0 bg-white/10"></div>
 
-            <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/50 to-white/80"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/30 to-white/80"></div>
 
             <div className="relative z-10 p-8 text-center">
               <h2 className="text-4xl font-title text-secondary">
@@ -263,15 +275,23 @@ export default function Invitation() {
             <FaHeart />
           </div>
 
-          <a
-            href={whatsapp}
-            target="_blank"
-            className="btn btn-secondary btn-lg rounded-full shadow-xl animate-pulse"
-          >
-            Confirmar asistencia
-          </a>
+          <div className="flex flex-col items-center gap-4">
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary btn-lg rounded-full shadow-xl animate-pulse [animation-duration:5s]"
+            >
+              Confirmar asistencia
+            </a>
 
-          <p className="mt-8 text-base-content/80">
+            <p className="text-sm text-base-content/70 max-w-xs text-center">
+              Nos encantará contar contigo, por favor confirma tu asistencia con
+              al menos dos semanas de anticipación.
+            </p>
+          </div>
+
+          <p className="mt-8 mb-10 text-base-content/80">
             ¡Nos encantará compartir este momento contigo!
           </p>
         </div>
