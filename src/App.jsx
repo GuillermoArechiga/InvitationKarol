@@ -47,9 +47,12 @@ export default function Invitation() {
       Array.from({ length: 60 }).map(() => ({
         left: Math.random() * 100,
         top: Math.random() * 100,
-        size: 6 + Math.random() * 10,
-        duration: 6 + Math.random() * 4,
-        drift: 4 + Math.random() * 6,
+        size: 4 + Math.random() * 8,
+        duration: 30 + Math.random() * 20,
+        driftX: (Math.random() - 0.5) * 120,
+        driftY: (Math.random() - 0.5) * 120,
+        blink: 8 + Math.random() * 6,
+        delay: Math.random() * 10,
       })),
     [],
   );
@@ -94,21 +97,34 @@ export default function Invitation() {
             width: `${dot.size}px`,
             height: `${dot.size}px`,
             background: "#FFD700",
-            filter: "blur(0.4px)",
+            filter: "blur(0.6px)",
             boxShadow:
-              "0 0 6px rgba(255,215,0,0.8), 0 0 12px rgba(255,215,0,0.5)",
+              "0 0 8px rgba(255,215,0,0.6), 0 0 18px rgba(255,215,0,0.3)",
           }}
           animate={{
-            y: [-dot.drift, dot.drift, -dot.drift],
-            opacity: [0.5, 0.9, 0.5],
-            scale: [1, 1.1, 1],
+            x: dot.driftX,
+            y: dot.driftY,
           }}
           transition={{
             duration: dot.duration,
             repeat: Infinity,
+            repeatType: "mirror",
             ease: "easeInOut",
+            delay: dot.delay,
           }}
-        />
+        >
+          <motion.div
+            className="w-full h-full rounded-full"
+            animate={{
+              opacity: [0.35, 0.8, 0.35],
+            }}
+            transition={{
+              duration: dot.blink,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
       ))}
     </>
   );
