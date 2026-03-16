@@ -65,7 +65,8 @@ export default function Invitation() {
       date: "11 de Abril",
       time: "4:00 PM",
       place: "Parroquia de Nuestra Señora de la Encarnación",
-      address: "Lomas de Rosales 703-13, Tampico",
+      address:
+        "Paseo Lomas los Rosales 703 1 3, Lomas de Rosales, 89100 Tampico, Tamps.",
       map: "https://maps.app.goo.gl/iJMJjHDEFBZ3um8h7",
       image: bautizo,
     },
@@ -76,7 +77,7 @@ export default function Invitation() {
       date: "11 de Abril",
       time: "5:00 PM",
       place: "Salón de Fiestas Children's",
-      address: "Fidel Ruiz 201, Tampico",
+      address: "Fidel Ruiz 201, Linda Vista, 89107 Tampico, Tamps.",
       map: "https://maps.app.goo.gl/uSTFtWaEEonHY6rf6",
       image: birthday,
     },
@@ -303,7 +304,7 @@ export default function Invitation() {
 
             <p className="text-sm text-base-content/70 max-w-xs text-center">
               Nos encantará contar contigo, por favor confirma tu asistencia con
-              al menos dos semanas de anticipación.
+              al menos una semanas de anticipación.
             </p>
           </div>
 
