@@ -17,6 +17,19 @@ export default function Invitation() {
     minutes: 0,
   });
 
+  const params = new URLSearchParams(window.location.search);
+  const adults = params.get("A");
+  const children = params.get("C");
+
+  const [showModal, setShowModal] = useState(false);
+  const [confirmAdults, setConfirmAdults] = useState(adults || 0);
+  const [confirmChildren, setConfirmChildren] = useState(children || 0);
+
+  const guestText =
+    adults || children
+      ? ` Somos ${adults || 0} adultos y ${children || 0} niños.`
+      : "";
+
   useEffect(() => {
     const timer = setInterval(() => {
       const diff = targetDate - new Date();
@@ -83,8 +96,13 @@ export default function Invitation() {
     },
   ];
 
-  const whatsapp =
-    "https://wa.me/5218334385938?text=Hola!%20Confirmo%20mi%20asistencia%20al%20Bautizo%20y%20Primer%20A%C3%B1ito%20de%20Karol%20el%2011%20de%20abril.%20%F0%9F%8E%89";
+  const sendConfirmation = () => {
+    const msg = `Hola! Confirmo mi asistencia al Bautizo y Primer Añito de Karol el sábado 11 de abril. Asistiremos ${confirmAdults} adultos y ${confirmChildren} niños. 🎉`;
+
+    const url = `https://wa.me/5218334385938?text=${encodeURIComponent(msg)}`;
+
+    window.open(url, "_blank");
+  };
 
   const GoldDots = () => (
     <>
@@ -116,9 +134,7 @@ export default function Invitation() {
         >
           <motion.div
             className="w-full h-full rounded-full"
-            animate={{
-              opacity: [0.35, 0.8, 0.35],
-            }}
+            animate={{ opacity: [0.35, 0.8, 0.35] }}
             transition={{
               duration: dot.blink,
               repeat: Infinity,
@@ -148,10 +164,7 @@ export default function Invitation() {
             opacity: [0.8, 1, 0.8],
             scale: [1, 1.25, 1],
           }}
-          transition={{
-            duration: sparkle.duration,
-            repeat: Infinity,
-          }}
+          transition={{ duration: sparkle.duration, repeat: Infinity }}
         >
           ✨
         </motion.div>
@@ -292,27 +305,138 @@ export default function Invitation() {
             <FaHeart />
           </div>
 
+          {(adults || children) && (
+            <div className="flex flex-col items-center gap-4 mb-6">
+              <p className="text-sm text-base-content/70 tracking-wide uppercase">
+                Esta invitación incluye
+              </p>
+
+              <div className="flex flex-col gap-3 w-full">
+                {/* Adults */}
+                <div className="flex items-center justify-between bg-base-100/80 rounded-xl px-4 py-3 shadow">
+                  <div className="text-2xl font-bold text-secondary">
+                    {adults || 0}
+                  </div>
+                  <div className="text-sm text-base-content/70 uppercase tracking-wide">
+                    Adultos
+                  </div>
+                </div>
+
+                {/* Children */}
+                <div className="flex items-center justify-between bg-base-100/80 rounded-xl px-4 py-3 shadow">
+                  <div className="text-2xl font-bold text-secondary">
+                    {children || 0}
+                  </div>
+                  <div className="text-sm text-base-content/70 uppercase tracking-wide">
+                    Niños
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="flex flex-col items-center gap-4">
-            <a
-              href={whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setShowModal(true)}
               className="btn btn-secondary btn-lg rounded-full shadow-xl animate-pulse [animation-duration:5s]"
             >
               Confirmar asistencia
-            </a>
+            </button>
 
             <p className="text-sm text-base-content/70 max-w-xs text-center">
               Nos encantará contar contigo, por favor confirma tu asistencia con
-              al menos una semanas de anticipación.
+              al menos una semana de anticipación.
             </p>
           </div>
 
           <p className="mt-8 mb-10 text-base-content/80">
-            ¡Nos encantará compartir este momento contigo!
+            ¡Esperamos verte en este día tan especial!
           </p>
         </div>
       </section>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-80 text-center">
+            <h2 className="text-xl font-semibold mb-6">Confirmar asistencia</h2>
+
+            {/* Adults */}
+            <div className="flex justify-between items-center mb-6">
+              <span className="text-base">Adultos</span>
+
+              <div className="flex items-center gap-3">
+                <button
+                  className="btn btn-circle btn-sm"
+                  onClick={() =>
+                    setConfirmAdults(Math.max(0, confirmAdults - 1))
+                  }
+                >
+                  −
+                </button>
+
+                <span className="w-8 text-center text-xl font-bold text-secondary">
+                  {confirmAdults}
+                </span>
+
+                <button
+                  className="btn btn-circle btn-sm"
+                  onClick={() =>
+                    setConfirmAdults(
+                      Math.min(Number(adults || 0), confirmAdults + 1),
+                    )
+                  }
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Children */}
+            <div className="flex justify-between items-center mb-8">
+              <span className="text-base">Niños</span>
+
+              <div className="flex items-center gap-3">
+                <button
+                  className="btn btn-circle btn-sm"
+                  onClick={() =>
+                    setConfirmChildren(Math.max(0, confirmChildren - 1))
+                  }
+                >
+                  −
+                </button>
+
+                <span className="w-8 text-center text-xl font-bold text-secondary">
+                  {confirmChildren}
+                </span>
+
+                <button
+                  className="btn btn-circle btn-sm"
+                  onClick={() =>
+                    setConfirmChildren(
+                      Math.min(Number(children || 0), confirmChildren + 1),
+                    )
+                  }
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="flex gap-3 justify-center">
+              <button
+                className="btn btn-ghost"
+                onClick={() => setShowModal(false)}
+              >
+                Cancelar
+              </button>
+
+              <button className="btn btn-secondary" onClick={sendConfirmation}>
+                Enviar confirmación
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
