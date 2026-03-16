@@ -343,15 +343,30 @@ export default function Invitation() {
               Confirmar asistencia
             </button>
 
-            <p className="text-sm text-base-content/70 max-w-xs text-center">
+            <p className="text-sm text-base-content/70 max-w-3/4 text-center">
               Nos encantará contar contigo, por favor confirma tu asistencia con
               al menos una semana de anticipación.
             </p>
           </div>
 
-          <p className="mt-8 mb-10 text-base-content/80">
-            ¡Esperamos verte en este día tan especial!
-          </p>
+          {/* Gift suggestion */}
+          <div className="mb-8 text-center mt-12">
+            <p className="text-xs uppercase tracking-wider text-base-content/60 mb-2">
+              Sugerencia de obsequio
+            </p>
+
+            <div className="flex justify-center items-center gap-2 text-base-content/80">
+              <span className="flex items-center gap-1">
+                🎁 <span className="text-sm">Regalo</span>
+              </span>
+
+              <span className="opacity-40">|</span>
+
+              <span className="flex items-center gap-1">
+                <span className="text-sm">✉️ Sobre</span>
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
